@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# NEXT_PUBLIC_SITE_URL will be substituted at deployment
+Sitemap: https://your-portfolio.vercel.app/sitemap.xml
