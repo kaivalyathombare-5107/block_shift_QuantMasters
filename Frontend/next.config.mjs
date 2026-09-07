@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
-// AFTER
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  ...
   images: {
     unoptimized: true,
-    // Allow GitHub avatar images
     remotePatterns: [
       {
         protocol: 'https',
