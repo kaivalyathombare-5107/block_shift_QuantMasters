@@ -24,6 +24,7 @@ export async function fetchGitHubStatsService(): Promise<APIResponse<GitHubStats
 
     const userRes = await fetch(`https://api.github.com/users/${username}`, {
       headers,
+      signal: AbortSignal.timeout(4000),
       next: { revalidate: 3600 },
     });
 
@@ -48,7 +49,7 @@ export async function fetchGitHubStatsService(): Promise<APIResponse<GitHubStats
 
     const reposRes = await fetch(
       `https://api.github.com/users/${username}/repos?sort=updated&per_page=10&type=public`,
-      { headers, next: { revalidate: 3600 } }
+      { headers, signal: AbortSignal.timeout(4000), next: { revalidate: 3600 } }
     );
     const reposData = reposRes.ok ? await reposRes.json() : [];
 

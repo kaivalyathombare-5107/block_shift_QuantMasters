@@ -32,11 +32,15 @@ async function apiFetch<T>(
   options?: RequestInit,
   nextOptions?: { revalidate?: number | false; tags?: string[] }
 ): Promise<APIResponse<T>> {
-  // During SSR / static generation, if BASE_URL is not set, relative fetch will fail in Node.
-  if (typeof window === 'undefined' && !BASE_URL) {
+  // During static site generation / next build phase, avoid external HTTP self-loops
+  // which can hang or fail before the server is running. Use the embedded content layer instead.
+  if (
+    typeof window === 'undefined' &&
+    (!BASE_URL || process.env.NEXT_PHASE === 'phase-production-build')
+  ) {
     return {
       data: null,
-      error: 'No BASE_URL provided during server-side fetch.',
+      error: 'Direct local resolution preferred during build phase.',
       status: 0,
       emptyState: { reason: 'api_error' },
     };
@@ -45,15 +49,20 @@ async function apiFetch<T>(
   const url = `${BASE_URL}${path}`;
 
   try {
+    // 4-second timeout to prevent build-time hangs on unreachable URLs
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
     const res = await fetch(url, {
       ...options,
+      signal: options?.signal ?? controller.signal,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         ...options?.headers,
       },
       next: nextOptions,
-    });
+    }).finally(() => clearTimeout(timeoutId));
 
     const contentType = res.headers.get('content-type') || '';
 
