@@ -1,0 +1,6 @@
+{
+  "name": "Block Shift QuantMasters",
+  "description": "A digital engineering portfolio and lab for useful software, intelligent systems, and AI systems engineering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

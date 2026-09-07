@@ -1,8 +1,493 @@
-import type { Achievement, BlogPost, DeveloperProfile, GitHubStats, Project, ResumeMetadata, TechStackItem } from '@/types'
-export const DEVELOPER_PROFILE: DeveloperProfile = { name: 'Alexander Alexander', title: 'AI Systems Engineer', location: 'Available worldwide', roles: ['AI systems engineer', 'creative technologist', 'full-stack builder', 'systems thinker'], bio: ['I design and ship intelligent products at the intersection of software, data, and human behavior.', 'My work moves from first principles to production: shaping clear interfaces, durable systems, and useful machine intelligence.', 'Currently exploring how small teams can build ambitious things with better tools and sharper thinking.'], email: 'hello@example.com', socialLinks: [{ platform: 'GitHub', label: 'github.com/yourname', handle: '@yourname', href: 'https://github.com' }, { platform: 'LinkedIn', label: 'linkedin.com/in/yourname', handle: 'in/yourname', href: 'https://linkedin.com' }, { platform: 'Email', label: 'hello@example.com', handle: 'hello@example.com', href: 'mailto:hello@example.com' }] }
-export const TECH_STACK: TechStackItem[] = ['TypeScript','Python','Go','SQL','React','Next.js','Node.js','FastAPI','PyTorch','OpenAI','LangChain','PostgreSQL','Vercel','AWS','Docker','Git','Figma','Playwright','Linux','GraphQL','Tailwind CSS'].map((name, i) => ({ name, category: i < 4 ? 'Languages' : i < 8 ? 'Frameworks' : i < 11 ? 'AI/ML' : i < 15 ? 'Cloud' : 'Tools', proficiency: i % 4 === 0 ? 'Expert' : i % 3 === 0 ? 'Familiar' : 'Proficient', icon: name.slice(0,2).toUpperCase(), years: (i % 6) + 1 }))
-export const PROJECTS: Project[] = [{ title: 'Signal / Knowledge Interface', slug: 'signal', description: 'A research workspace that turns noisy source material into clear, navigable intelligence.', tags: ['AI/ML','Next.js','Postgres'], imageSrc: '', githubUrl: '', liveUrl: '', status: 'In progress', featured: true, date: '2026' }, { title: 'Field Notes', slug: 'field-notes', description: 'A calm publishing system for technical thinking, designed around the act of making ideas legible.', tags: ['TypeScript','Design Systems'], imageSrc: '', githubUrl: '', liveUrl: '', status: 'Live', featured: true, date: '2025' }, { title: 'Runtime Observatory', slug: 'runtime-observatory', description: 'Small, sharp tools for understanding what production systems are actually doing.', tags: ['Go','Observability'], imageSrc: '', githubUrl: '', liveUrl: '', status: 'Archived', featured: false, date: '2024' }, { title: 'Atlas API', slug: 'atlas-api', description: 'A typed API foundation for teams that want velocity without mystery.', tags: ['FastAPI','Postgres'], imageSrc: '', githubUrl: '', liveUrl: '', status: 'Live', featured: false, date: '2024' }]
-export const BLOG_POSTS: BlogPost[] = [{ title: 'The interface is the system', slug: 'interface-is-the-system', excerpt: 'Why good product surfaces make complex software feel inevitable.', content: 'Interfaces are where systems become legible. The best ones do not hide complexity; they give it a shape people can reason about.', date: '2026-02-14', readTime: '6 min read', tag: 'Systems' }, { title: 'Building with a smaller state space', slug: 'smaller-state-space', excerpt: 'A practical argument for fewer moving parts and more durable software.', content: 'Every new abstraction creates a new place for meaning to drift. Reduce the state space and your team gains room to think.', date: '2026-01-20', readTime: '4 min read', tag: 'Engineering' }, { title: 'Notes on useful intelligence', slug: 'useful-intelligence', excerpt: 'Machine learning becomes valuable when it sharpens human judgment.', content: 'The most useful AI products are not magic tricks. They are carefully designed instruments for seeing and deciding.', date: '2025-12-04', readTime: '8 min read', tag: 'AI' }]
-export const ACHIEVEMENTS: Achievement[] = [{ year: '2026', title: 'Independent practice launched', organization: 'Personal studio', type: 'Publication', description: 'Building useful tools in public.' }, { year: '2025', title: 'Systems design fellowship', organization: 'Open Systems Lab', type: 'Certification', description: 'Advanced distributed systems and product architecture.' }, { year: '2024', title: 'Best technical concept', organization: 'Build Weekend', type: 'Award', description: 'A prototype for collaborative research.' }, { year: '2023', title: 'Open source maintainer', organization: 'Community', type: 'Publication', description: 'Contributed tools used by independent teams.' }, { year: '2022', title: 'First production system', organization: 'The beginning', type: 'Certification', description: 'Shipped software that people depended on.' }]
-export const GITHUB_STATS: GitHubStats = { commits: 0, repos: 0, pullRequests: 0, stars: 0, contributionData: [], topRepos: [] }
-export const RESUME_METADATA: ResumeMetadata = { updatedAt: '', pages: 0, fileSize: '' }
+import type {
+  Achievement,
+  BlogPost,
+  DeveloperProfile,
+  Education,
+  GitHubStats,
+  Project,
+  ResumeMetadata,
+  TechStackItem,
+} from '@/types';
+
+export const DEVELOPER_PROFILE: DeveloperProfile = {
+  name: 'Alex Rivera',
+  tagline: 'Software & AI Systems Engineer',
+  title: 'Software & AI Systems Engineer',
+  roles: [
+    'Software Engineer',
+    'AI Systems Builder',
+    'Computer Engineering Student',
+    'Open Source Contributor',
+  ],
+  shortBio:
+    'Computer engineering student specializing in distributed systems, machine learning infrastructure, and high-performance web applications.',
+  bio: [
+    'I design and ship intelligent products at the intersection of software, data, and human behavior.',
+    'My work bridges low-level system design with scalable cloud-native architectures.',
+    'Currently exploring high-throughput retrieval systems and developing open-source tooling for modern web and data stacks.',
+  ],
+  longBio: [
+    'I am a software engineer and computer engineering student dedicated to building robust, data-intensive systems and production-grade artificial intelligence pipelines. My work bridges low-level system design with scalable cloud-native architectures.',
+    'Throughout my academic and project career, I have focused on building distributed data workflows, low-latency microservices, and end-to-end ML deployment frameworks. I prioritize type safety, deterministic testing, and observable system behavior in every codebase I contribute to.',
+    'Currently, I am researching high-throughput retrieval systems and developing open-source tooling for modern web and data stacks. When not engineering software, I contribute to community technical initiatives, compete in hackathons, and publish technical write-ups.',
+  ],
+  email: 'alex.rivera@example.com',
+  location: 'San Francisco, CA',
+  openToWork: true,
+  avatarUrl: '',
+  socialLinks: [
+    {
+      platform: 'GitHub',
+      url: 'https://github.com/placeholder-username',
+      href: 'https://github.com/placeholder-username',
+      handle: 'placeholder-username',
+      label: 'github.com/placeholder-username',
+    },
+    {
+      platform: 'LinkedIn',
+      url: 'https://linkedin.com/in/placeholder-profile',
+      href: 'https://linkedin.com/in/placeholder-profile',
+      handle: 'alex-rivera',
+      label: 'linkedin.com/in/alex-rivera',
+    },
+    {
+      platform: 'Twitter',
+      url: 'https://twitter.com/placeholder-handle',
+      href: 'https://twitter.com/placeholder-handle',
+      handle: '@alexrivera_dev',
+      label: '@alexrivera_dev',
+    },
+    {
+      platform: 'Email',
+      url: 'mailto:alex.rivera@example.com',
+      href: 'mailto:alex.rivera@example.com',
+      handle: 'alex.rivera@example.com',
+      label: 'alex.rivera@example.com',
+    },
+  ],
+};
+
+export const TECH_STACK: TechStackItem[] = [
+  {
+    name: 'Python',
+    category: 'Languages',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.5,
+    years: 3.5,
+    iconSlug: 'python',
+    icon: 'PY',
+    tags: ['backend', 'ai', 'data-science', 'scripting'],
+  },
+  {
+    name: 'TypeScript',
+    category: 'Languages',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.0,
+    years: 3.0,
+    iconSlug: 'typescript',
+    icon: 'TS',
+    tags: ['frontend', 'backend', 'type-system', 'node'],
+  },
+  {
+    name: 'JavaScript',
+    category: 'Languages',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.5,
+    years: 3.5,
+    iconSlug: 'javascript',
+    icon: 'JS',
+    tags: ['web', 'frontend', 'es6', 'runtimes'],
+  },
+  {
+    name: 'C++',
+    category: 'Languages',
+    proficiencyLevel: 'Proficient',
+    proficiency: 'Proficient',
+    yearsOfExperience: 2.0,
+    years: 2.0,
+    iconSlug: 'cplusplus',
+    icon: 'C+',
+    tags: ['systems', 'algorithms', 'embedded', 'performance'],
+  },
+  {
+    name: 'SQL',
+    category: 'Languages',
+    proficiencyLevel: 'Proficient',
+    proficiency: 'Proficient',
+    yearsOfExperience: 2.5,
+    years: 2.5,
+    iconSlug: 'postgresql',
+    icon: 'SQ',
+    tags: ['database', 'queries', 'relational', 'analytics'],
+  },
+  {
+    name: 'Next.js',
+    category: 'Frameworks',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.0,
+    years: 3.0,
+    iconSlug: 'nextdotjs',
+    icon: 'NX',
+    tags: ['fullstack', 'react', 'ssr', 'routing'],
+  },
+  {
+    name: 'React',
+    category: 'Frameworks',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.5,
+    years: 3.5,
+    iconSlug: 'react',
+    icon: 'RC',
+    tags: ['frontend', 'ui', 'components', 'hooks'],
+  },
+  {
+    name: 'FastAPI',
+    category: 'Frameworks',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 2.5,
+    years: 2.5,
+    iconSlug: 'fastapi',
+    icon: 'FA',
+    tags: ['backend', 'python', 'rest-api', 'async'],
+  },
+  {
+    name: 'PyTorch',
+    category: 'AI_ML',
+    proficiencyLevel: 'Proficient',
+    proficiency: 'Proficient',
+    yearsOfExperience: 2.0,
+    years: 2.0,
+    iconSlug: 'pytorch',
+    icon: 'PT',
+    tags: ['deep-learning', 'neural-networks', 'tensors', 'training'],
+  },
+  {
+    name: 'LangChain',
+    category: 'AI_ML',
+    proficiencyLevel: 'Proficient',
+    proficiency: 'Proficient',
+    yearsOfExperience: 1.5,
+    years: 1.5,
+    iconSlug: 'langchain',
+    icon: 'LC',
+    tags: ['llm', 'rag', 'agents', 'chains'],
+  },
+  {
+    name: 'PostgreSQL',
+    category: 'Databases',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.0,
+    years: 3.0,
+    iconSlug: 'postgresql',
+    icon: 'PG',
+    tags: ['relational', 'sql', 'acid', 'indexing', 'pgvector'],
+  },
+  {
+    name: 'Redis',
+    category: 'Databases',
+    proficiencyLevel: 'Proficient',
+    proficiency: 'Proficient',
+    yearsOfExperience: 2.0,
+    years: 2.0,
+    iconSlug: 'redis',
+    icon: 'RD',
+    tags: ['caching', 'in-memory', 'pub-sub', 'rate-limiting'],
+  },
+  {
+    name: 'Docker',
+    category: 'Tools',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.0,
+    years: 3.0,
+    iconSlug: 'docker',
+    icon: 'DK',
+    tags: ['containers', 'devops', 'images', 'deployment'],
+  },
+  {
+    name: 'Kubernetes',
+    category: 'Cloud',
+    proficiencyLevel: 'Familiar',
+    proficiency: 'Familiar',
+    yearsOfExperience: 1.0,
+    years: 1.0,
+    iconSlug: 'kubernetes',
+    icon: 'K8',
+    tags: ['orchestration', 'cloud-native', 'scaling', 'deployments'],
+  },
+  {
+    name: 'Tailwind CSS',
+    category: 'Frameworks',
+    proficiencyLevel: 'Expert',
+    proficiency: 'Expert',
+    yearsOfExperience: 3.0,
+    years: 3.0,
+    iconSlug: 'tailwindcss',
+    icon: 'TW',
+    tags: ['styling', 'css', 'utility-first', 'responsive'],
+  },
+];
+
+export const PROJECTS: Project[] = [
+  {
+    slug: 'neural-code-reviewer',
+    title: 'NeuralReview: AI-Powered Automated Code Reviewer',
+    shortDescription:
+      'Autonomous static analysis and LLM-assisted code review engine delivering AST-aware security and performance optimizations.',
+    description:
+      'Autonomous static analysis and LLM-assisted code review engine delivering AST-aware security and performance optimizations.',
+    problem:
+      'Code reviews are time-consuming and human reviewers often miss subtle security vulnerabilities, edge-case memory leaks, or non-idiomatic anti-patterns during rapid pull request turnarounds.',
+    solution:
+      'Engineered an event-driven bot integrated into GitHub Webhooks that parses diffs into Abstract Syntax Trees, runs semantic vector retrieval against historical vulnerability patterns, and delivers contextual inline comments.',
+    architecture:
+      'Built on Next.js, FastAPI, LangChain, and PostgreSQL with pgvector. GitHub webhooks trigger Celery async tasks that stream AST analysis to OpenAI/Claude APIs with token budgeting and fallback caches in Redis.',
+    features: [
+      'Automated AST parsing and syntax diff extraction across TypeScript, Python, and Go.',
+      'Contextual vector search matching PR changes against past CVEs and company style guides.',
+      'One-click GitHub suggestion patches directly committable from PR comments.',
+      'Real-time execution dashboard monitoring review latency and token expenditure.',
+    ],
+    impact:
+      'Reduced pull request turnaround latency by 45% in test repositories and caught 18 critical security anomalies before merging to staging.',
+    technologies: ['FastAPI', 'Python', 'Next.js', 'PostgreSQL', 'Redis', 'LangChain', 'Docker'],
+    tags: ['FastAPI', 'Python', 'Next.js', 'PostgreSQL'],
+    githubUrl: 'https://github.com/placeholder-username/neural-code-reviewer',
+    liveDemoUrl: '',
+    imageUrls: [],
+    videoUrl: '',
+    status: 'Active',
+    date: '2024-03-15',
+    category: 'AI & Developer Tools',
+    featured: true,
+    order: 1,
+  },
+  {
+    slug: 'canvas-sync-engine',
+    title: 'CanvasSync: Real-Time CRDT Document Engine',
+    shortDescription:
+      'Distributed collaborative whiteboard and markdown editor powered by Conflict-free Replicated Data Types (CRDTs) and WebSockets.',
+    description:
+      'Distributed collaborative whiteboard and markdown editor powered by Conflict-free Replicated Data Types (CRDTs) and WebSockets.',
+    problem:
+      'Concurrent real-time editing across high-latency clients frequently causes race conditions, text desynchronization, or excessive lock contention in traditional centralized databases.',
+    solution:
+      'Implemented a decentralized synchronization engine utilizing Yjs CRDTs over WebSockets with optimistic local rendering, snapshot pruning, and offline reconciliation.',
+    architecture:
+      'Node.js and TypeScript WebSocket cluster behind an NGINX load balancer, paired with Redis pub/sub for cross-server message propagation and S3-compatible storage for periodic state snapshots.',
+    features: [
+      'Sub-50ms peer-to-peer visual cursor tracking and multi-cursor selection states.',
+      'Conflict-free offline-first document persistence with automatic reconciliation upon reconnecting.',
+      'Granular operational transformation undo/redo history tracking per active user.',
+      'End-to-end encrypted room sessions with Ephemeral WebRTC media channels.',
+    ],
+    impact:
+      'Benchmarked 99.98% state consistency across 1,000 simulated concurrent edits with zero data loss under simulated 300ms packet latency.',
+    technologies: ['TypeScript', 'React', 'Node.js', 'WebSockets', 'Redis', 'Tailwind CSS'],
+    tags: ['TypeScript', 'React', 'WebSockets', 'Redis'],
+    githubUrl: 'https://github.com/placeholder-username/canvas-sync-engine',
+    liveDemoUrl: '',
+    imageUrls: [],
+    videoUrl: '',
+    status: 'Completed',
+    date: '2024-01-20',
+    category: 'Distributed Systems',
+    featured: true,
+    order: 2,
+  },
+  {
+    slug: 'streamline-ml-ops',
+    title: 'StreamLine MLOps: Automated Edge Model Deployment',
+    shortDescription:
+      'Continuous deployment pipeline converting PyTorch and ONNX models into quantized microservices deployed on Kubernetes.',
+    description:
+      'Continuous deployment pipeline converting PyTorch and ONNX models into quantized microservices deployed on Kubernetes.',
+    problem:
+      'Deploying deep learning models into production requires tedious manual quantization, containerization, and GPU memory profiling, delaying time-to-market.',
+    solution:
+      'Built a declarative CI/CD pipeline that takes raw PyTorch weights, automatically benchmarks latency across FP16/INT8 quantizations, generates optimized TensorRT engines, and builds hardened Docker containers.',
+    architecture:
+      'Python-based CLI and runner interacting with GitHub Actions, Triton Inference Server, Kubernetes (K8s), and Prometheus for real-time inference telemetry.',
+    features: [
+      'Automated post-training static and dynamic quantization targeting INT8 precision.',
+      'Automated regression testing ensuring <1% accuracy degradation post-quantization.',
+      'Helm chart generation with custom Horizontal Pod Autoscaler (HPA) triggers on GPU duty cycle.',
+      'Built-in model performance heatmaps tracking P95/P99 latency under synthetic load.',
+    ],
+    impact:
+      'Sped up model deployment lifecycle from 3 days to under 25 minutes while cutting edge inference memory consumption by 62%.',
+    technologies: ['Python', 'PyTorch', 'Docker', 'Kubernetes', 'Triton', 'GitHub Actions'],
+    tags: ['Python', 'PyTorch', 'Docker', 'Kubernetes'],
+    githubUrl: 'https://github.com/placeholder-username/streamline-ml-ops',
+    liveDemoUrl: '',
+    imageUrls: [],
+    videoUrl: '',
+    status: 'InProgress',
+    date: '2023-11-10',
+    category: 'Machine Learning Infrastructure',
+    featured: false,
+    order: 3,
+  },
+  {
+    slug: 'portfolio-backend-system',
+    title: 'Corefolio: Production-Grade Portfolio Data Layer',
+    shortDescription:
+      'Robust headless content and integration backend featuring GitHub GraphQL sync, MDX parsing, and strict type safety.',
+    description:
+      'Robust headless content and integration backend featuring GitHub GraphQL sync, MDX parsing, and strict type safety.',
+    problem:
+      'Developer portfolios often tightly couple presentation with data, lack caching, fail silently on third-party API rate limits, and suffer from untyped content mutations.',
+    solution:
+      'Designed an enterprise-ready headless data layer for personal portfolios with unified APIResponse contracts, rate-limited email dispatch, and resilient fallback handling.',
+    architecture:
+      'Next.js 14 App Router backend with Next.js route handlers, Zod schema validation, Resend transactional mailer, gray-matter MDX engine, and GitHub GraphQL integration.',
+    features: [
+      'Unified APIResponse<T> with detailed emptyState metadata and HTTP error codes.',
+      'Hybrid GitHub sync fetching REST repository metrics and GraphQL contribution graphs.',
+      'Self-pruning sliding window rate limiter with Upstash Redis and in-memory fallbacks.',
+      'Strict Zod-validated contact form with honeypot bot trap and HTML templating.',
+    ],
+    impact:
+      'Provides 100% type-safe headless endpoints with resilient offline fallbacks and 0 UI coupling.',
+    technologies: ['Next.js', 'TypeScript', 'Zod', 'Resend', 'GitHub API', 'MDX'],
+    tags: ['Next.js', 'TypeScript', 'Zod', 'Resend'],
+    githubUrl: 'https://github.com/placeholder-username/portfolio-backend-system',
+    liveDemoUrl: '',
+    imageUrls: [],
+    videoUrl: '',
+    status: 'Active',
+    date: '2023-09-01',
+    category: 'Backend & Infrastructure',
+    featured: false,
+    order: 4,
+  },
+];
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    title: 'Hello, World: Building in Public',
+    slug: 'hello-world',
+    description: 'An introduction to this blog and what to expect.',
+    excerpt: 'An introduction to this blog and what to expect.',
+    content:
+      'Welcome to my personal engineering journal. This space serves as an open notebook where I document my technical explorations, architectural retrospectives, and deep dives into distributed systems, AI engineering, and web infrastructure.\n\nBuilding in public provides a transparent feedback loop for learning.',
+    date: '2024-01-01',
+    publishedAt: '2024-01-01',
+    readingTime: 3,
+    readTime: '3 min read',
+    tags: ['meta', 'engineering'],
+    tag: 'meta',
+    draft: false,
+    relatedTechnologies: ['Next.js', 'MDX'],
+  },
+];
+
+export const ACHIEVEMENTS: Achievement[] = [
+  {
+    title: '1st Place Winner — Regional Collegiate Hackathon',
+    organization: 'Regional Collegiate Hackathon',
+    year: 2024,
+    month: 3,
+    type: 'Hackathon',
+    description:
+      'Engineered an autonomous edge computer vision system for low-power robotics within 36 hours, awarded 1st place among 80+ competing university teams.',
+    url: '',
+    featured: true,
+  },
+  {
+    title: 'Dean’s Honor List & Engineering Excellence Award',
+    organization: 'School of Engineering',
+    year: 2023,
+    month: 12,
+    type: 'Award',
+    description:
+      'Recognized for sustained academic excellence in Computer Engineering coursework, maintaining a top 5% GPA standing in the cohort.',
+    url: '',
+    featured: true,
+  },
+  {
+    title: 'AWS Certified Solutions Architect – Associate',
+    organization: 'Amazon Web Services',
+    year: 2023,
+    month: 8,
+    type: 'Certification',
+    description:
+      'Demonstrated comprehensive knowledge in architecting secure, resilient, high-performing, and cost-optimized cloud applications on AWS.',
+    url: '',
+    featured: false,
+  },
+  {
+    title: 'Open Source Community Fellow / Contributor Recognition',
+    organization: 'Open Source Foundation',
+    year: 2024,
+    month: 6,
+    type: 'Recognition',
+    description:
+      'Recognized for significant upstream contributions to developer tools and documentation supporting thousands of global developers.',
+    url: '',
+    featured: false,
+  },
+  {
+    title: 'Undergraduate Research Symposium Best Poster Presentation',
+    organization: 'Research Symposium',
+    year: 2024,
+    month: 5,
+    type: 'Other',
+    description:
+      'Co-authored and presented exploratory research on hardware-accelerated transformer quantization for resource-constrained edge computing devices.',
+    url: '',
+    featured: true,
+  },
+];
+
+export const EDUCATION: Education[] = [
+  {
+    degree: 'Bachelor of Science (B.S.)',
+    field: 'Computer Engineering',
+    institution: 'Institute of Technology',
+    location: 'California, USA',
+    startYear: 2021,
+    endYear: 'Present',
+    gpa: 3.88,
+    maxGpa: 4.0,
+    highlights: [
+      'Relevant Coursework: Distributed Systems, Operating Systems, Data Structures & Algorithms, Computer Architecture, Machine Learning.',
+      'Undergraduate Teaching Assistant for Data Structures and Systems Programming.',
+      'Active member of the Engineering Student Council and Competitive Robotics Club.',
+    ],
+  },
+];
+
+export const GITHUB_STATS: GitHubStats = {
+  profile: {
+    login: '',
+    name: '',
+    bio: '',
+    avatarUrl: '',
+    followers: 0,
+    following: 0,
+    publicRepos: 0,
+    profileUrl: '',
+  },
+  topRepos: [],
+  languageStats: [],
+  totalStars: 0,
+  contributionData: [],
+  fetchedAt: new Date().toISOString(),
+};
+
+export const RESUME_METADATA: ResumeMetadata = {
+  fileName: 'Resume-Alex-Rivera.pdf',
+  lastUpdated: '2024-03-01',
+  fileSizeKb: 142,
+  pageCount: 2,
+  downloadUrl: '/api/resume/download',
+  viewUrl: '#resume',
+};

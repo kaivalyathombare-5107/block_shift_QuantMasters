@@ -44,7 +44,6 @@ import {
   Code2,
   ExternalLink,
   CircleDot,
-  Linkedin,
   Mail,
   Menu,
   Minus,

@@ -42,7 +42,7 @@ export function useContact(): UseContactReturn {
 
     if (res.data?.success) {
       setStatus('success');
-      setMessage(res.data.message || 'Message sent! I'll get back to you soon.');
+      setMessage(res.data.message || "Message sent! I'll get back to you soon.");
       return;
     }
 

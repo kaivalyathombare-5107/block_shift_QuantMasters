@@ -9,226 +9,27 @@
  * Frontend on :3000. In production they can be different Vercel projects.
  */
 
-// ─── Types (mirrors Backend/types/index.ts) ───────────────────────────────
+// ─── Types (from @/types) ──────────────────────────────────────────────────
 
-export type EmptyStateReason =
-  | 'not_configured'
-  | 'api_error'
-  | 'rate_limited'
-  | 'not_found'
-  | 'empty';
+export * from '@/types';
+import type {
+  APIResponse,
+  BlogListItem,
+  BlogPost,
+  ContactFormPayload,
+  ContactFormResult,
+  GitHubStats,
+  Project,
+  ResumeMetadata,
+} from '@/types';
 
-export interface EmptyState {
-  reason: EmptyStateReason;
-}
-
-export interface APIResponse<T> {
-  data: T | null;
-  error: string | null;
-  status: number;
-  cachedAt?: string;
-  emptyState?: EmptyState;
-}
-
-// Profile
-export interface SocialLink {
-  platform: string;
-  url: string;
-  handle: string;
-}
-
-export interface DeveloperProfile {
-  name: string;
-  tagline: string;
-  roles: string[];
-  shortBio: string;
-  longBio: string[];
-  email: string;
-  location: string;
-  openToWork: boolean;
-  avatarUrl: string;
-  socialLinks: SocialLink[];
-}
-
-// Tech Stack
-export type TechCategory =
-  | 'Languages'
-  | 'Frameworks'
-  | 'Libraries'
-  | 'AI_ML'
-  | 'Cloud'
-  | 'Databases'
-  | 'Tools'
-  | 'Other';
-
-export type ProficiencyLevel = 'Familiar' | 'Proficient' | 'Expert';
-
-export interface TechStackItem {
-  name: string;
-  category: TechCategory;
-  proficiencyLevel: ProficiencyLevel;
-  yearsOfExperience: number;
-  iconSlug: string;
-  tags: string[];
-}
-
-// Projects
-export type ProjectStatus = 'Active' | 'Completed' | 'Archived' | 'InProgress';
-
-export interface Project {
-  slug: string;
-  title: string;
-  shortDescription: string;
-  problem: string;
-  solution: string;
-  architecture: string;
-  features: string[];
-  impact: string;
-  technologies: string[];
-  githubUrl: string;
-  liveDemoUrl: string;
-  imageUrls: string[];
-  videoUrl: string;
-  status: ProjectStatus;
-  date: string;
-  category: string;
-  featured: boolean;
-  order: number;
-}
-
-// Blog
-export interface BlogFrontmatter {
-  title: string;
-  slug: string;
-  description: string;
-  tags: string[];
-  publishedAt: string;
-  updatedAt?: string;
-  readingTime: number;
-  coverImageUrl?: string;
-  relatedTechnologies: string[];
-  draft: boolean;
-}
-
-export type BlogPost = BlogFrontmatter & { content: string };
-export type BlogListItem = Omit<BlogPost, 'content'>;
-
-// Achievements & Education
-export type AchievementType =
-  | 'Hackathon'
-  | 'Award'
-  | 'Certification'
-  | 'Publication'
-  | 'Recognition'
-  | 'Other';
-
-export interface Achievement {
-  title: string;
-  organization: string;
-  year: number;
-  month?: number;
-  type: AchievementType;
-  description: string;
-  url?: string;
-  featured: boolean;
-}
-
-export interface Education {
-  degree: string;
-  field: string;
-  institution: string;
-  location: string;
-  startYear: number;
-  endYear: number | 'Present';
-  gpa?: number;
-  maxGpa?: number;
-  highlights: string[];
-}
-
-// GitHub
-export interface GitHubProfile {
-  login: string;
-  name: string;
-  bio: string;
-  avatarUrl: string;
-  followers: number;
-  following: number;
-  publicRepos: number;
-  profileUrl: string;
-}
-
-export interface GitHubRepo {
-  id: number;
-  name: string;
-  fullName: string;
-  description: string;
-  url: string;
-  homepage?: string;
-  stars: number;
-  forks: number;
-  language?: string;
-  topics: string[];
-  updatedAt: string;
-  isArchived: boolean;
-  isFork: boolean;
-}
-
-export interface GitHubLanguageStats {
-  language: string;
-  percentage: number;
-  color: string;
-}
-
-export type ContributionLevel = 0 | 1 | 2 | 3 | 4;
-
-export interface ContributionDay {
-  date: string;
-  count: number;
-  level: ContributionLevel;
-}
-
-export interface ContributionWeek {
-  week: string;
-  days: ContributionDay[];
-}
-
-export interface GitHubStats {
-  profile: GitHubProfile;
-  topRepos: GitHubRepo[];
-  languageStats: GitHubLanguageStats[];
-  totalStars: number;
-  contributionData: ContributionWeek[];
-  fetchedAt: string;
-}
-
-// Resume
-export interface ResumeMetadata {
-  fileName: string;
-  lastUpdated: string;
-  fileSizeKb: number;
-  pageCount: number | null;
-  downloadUrl: string;
-  viewUrl: string;
-}
-
-// Contact
-export interface ContactFormPayload {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  _honeypot?: string;
-}
-
-export interface ContactFormResult {
-  success: boolean;
-  message: string;
-}
+import { PROJECTS, RESUME_METADATA, BLOG_POSTS } from '@/lib/data';
+import { fetchGitHubStatsService } from '@/lib/backend/github';
 
 // ─── Core fetch helper ─────────────────────────────────────────────────────
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:3001';
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? '';
 
 async function apiFetch<T>(
   path: string,
@@ -265,31 +66,82 @@ async function apiFetch<T>(
 
 /** GET /api/github — ISR 1 hour */
 export async function fetchGitHubStats(): Promise<APIResponse<GitHubStats>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    return fetchGitHubStatsService();
+  }
   return apiFetch<GitHubStats>('/api/github', undefined, { revalidate: 3600 });
 }
 
 /** GET /api/blog — ISR 1 hour, returns list items (no body content) */
 export async function fetchBlogList(): Promise<APIResponse<BlogListItem[]>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    const list: BlogListItem[] = BLOG_POSTS.map((p) => ({
+      title: p.title,
+      slug: p.slug,
+      description: p.description || p.excerpt || '',
+      tags: p.tags || [],
+      publishedAt: p.publishedAt || p.date || '',
+      readingTime: p.readingTime || 3,
+      draft: false,
+    }));
+    return {
+      data: list,
+      error: null,
+      status: 200,
+    };
+  }
   return apiFetch<BlogListItem[]>('/api/blog', undefined, { revalidate: 3600 });
 }
 
 /** GET /api/blog/:slug — ISR 1 hour */
 export async function fetchBlogPost(slug: string): Promise<APIResponse<BlogPost>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    const post = BLOG_POSTS.find((p) => p.slug === slug) ?? null;
+    return {
+      data: post,
+      error: post ? null : 'Not found',
+      status: post ? 200 : 404,
+      emptyState: post ? undefined : { reason: 'not_found' },
+    };
+  }
   return apiFetch<BlogPost>(`/api/blog/${slug}`, undefined, { revalidate: 3600 });
 }
 
 /** GET /api/projects — ISR 24 hours */
 export async function fetchProjects(): Promise<APIResponse<Project[]>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    return {
+      data: PROJECTS,
+      error: null,
+      status: 200,
+    };
+  }
   return apiFetch<Project[]>('/api/projects', undefined, { revalidate: 86400 });
 }
 
 /** GET /api/projects/:slug — ISR 24 hours */
 export async function fetchProject(slug: string): Promise<APIResponse<Project>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    const project = PROJECTS.find((p) => p.slug === slug) ?? null;
+    return {
+      data: project,
+      error: project ? null : 'Not found',
+      status: project ? 200 : 404,
+      emptyState: project ? undefined : { reason: 'not_found' },
+    };
+  }
   return apiFetch<Project>(`/api/projects/${slug}`, undefined, { revalidate: 86400 });
 }
 
 /** GET /api/resume — ISR 24 hours */
 export async function fetchResumeMetadata(): Promise<APIResponse<ResumeMetadata>> {
+  if (typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    return {
+      data: RESUME_METADATA,
+      error: null,
+      status: 200,
+    };
+  }
   return apiFetch<ResumeMetadata>('/api/resume', undefined, { revalidate: 86400 });
 }
 

@@ -1,0 +1,15 @@
+{
+  "name": "block-shift-quantmasters",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "Frontend",
+    "Backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=Frontend",
+    "build": "npm run build --workspace=Frontend",
+    "start": "npm run start --workspace=Frontend",
+    "lint": "npm run lint --workspace=Frontend"
+  }
+}
