@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "Frontend"
+    "Frontend",
+    "Backend"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=Frontend",
