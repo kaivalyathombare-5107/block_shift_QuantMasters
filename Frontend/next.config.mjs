@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
+// AFTER
 const nextConfig = {
-  output: 'standalone',
   typescript: {
     ignoreBuildErrors: true,
   },
+  ...
   images: {
     unoptimized: true,
     // Allow GitHub avatar images
