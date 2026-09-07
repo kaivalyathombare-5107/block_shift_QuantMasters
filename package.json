@@ -13,5 +13,3 @@
     "lint": "npm run lint --workspace=Frontend"
   }
 }
-"next": "^15.3.0",
-"next-mdx-remote": "^6.0.0",
