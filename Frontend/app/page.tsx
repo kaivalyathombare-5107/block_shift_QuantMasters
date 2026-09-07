@@ -53,6 +53,7 @@ import {
 } from 'lucide-react';
 
 import ContactSection from '@/components/ContactSection';
+import { PROJECTS, RESUME_METADATA, BLOG_POSTS } from '@/lib/data';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
@@ -132,9 +133,13 @@ export default async function Page() {
   ]);
 
   const github: GitHubStats | null = githubRes.data;
-  const projects: Project[] = projectsRes.data ?? [];
-  const blogPosts: BlogListItem[] = blogRes.data ?? [];
-  const resume: ResumeMetadata | null = resumeRes.data;
+  const projects: Project[] =
+    projectsRes.data && projectsRes.data.length > 0 ? projectsRes.data : PROJECTS;
+  const blogPosts: BlogListItem[] =
+    blogRes.data && blogRes.data.length > 0
+      ? blogRes.data
+      : (BLOG_POSTS as BlogListItem[]);
+  const resume: ResumeMetadata | null = resumeRes.data ?? RESUME_METADATA;
 
   // Contribution heatmap — flatten weeks → days for rendering
   const contribDays =
